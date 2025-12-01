@@ -27,5 +27,16 @@ router.post('/add', (req,res) => {
     });
     });
 
+    router.delete('/delete/:id', (req, res) => {
+        const id = req.params.id;
+
+  Recette.findByIdAndDelete(id)
+    .then(() => {
+      Recette.find().then(data => {
+        res.json({ result: true, data });
+      });
+    })
+});
+
 
 module.exports = router;
