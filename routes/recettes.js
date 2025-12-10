@@ -27,6 +27,23 @@ router.post('/add', (req,res) => {
     });
     });
 
+    router.put('/update/:id', (req,res) => {
+        const id = req.params.id;
+        const newTitre = req.body.titre;
+
+        //vérifier si un titre est bien saisi
+        if(!newTitre || newTitre.trim() === '') {
+            return res.json({result:false, message:'titre manquant'});
+        }
+
+        Recette.findByIdAndUpdate(id, {titre:newTitre})
+        .then(() => {
+            Recette.find().then(data => {
+                res.json({result:true, data})
+            })
+        })
+    })
+
     router.delete('/delete/:id', (req, res) => {
         const id = req.params.id;
 
